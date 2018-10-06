@@ -10,7 +10,7 @@ module.exports = {
   chainWebpack: config => {
     config.resolve.alias
       .set('@', resolve('src'))
-      .set('_c', resolve('scr/components'))
+      .set('_c', resolve('src/components'))
   },
   // 打包时不生成.map文件
   productionSourceMap: false,
