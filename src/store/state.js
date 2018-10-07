@@ -1,5 +1,6 @@
 const state = {
-  appName: 'admin'
+  appName: 'admin',
+  appVersion: '1.0'
 }
 
 export default state
