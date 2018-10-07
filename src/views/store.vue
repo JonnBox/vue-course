@@ -1,10 +1,10 @@
 <template>
   <div>
-    <a-input @input="handleInput"></a-input>
-    <p>{{ inputValue }} => lastLetter is {{ inputValueLastLetter }}</p>
-    <!-- <a-show :content="inputValue"></a-show> -->
+    <a-input v-model="stateValue"/>
+    <p>{{ stateValue }} -> lastLetter is {{ inputValueLastLetter }}</p>
+    <!-- <a-show :content="inputValue"/> -->
     <p>appName: {{ appName }}, appNameWithVersion : {{ appNameWithVersion }}</p>
-    <p>userName: {{ userName }}, firstLetter is : {{ firstLetter }}</p>
+    <p>userName : {{ userName }}, firstLetter is : {{ firstLetter }}</p>
     <button @click="handleChangeAppName">修改appName</button>
     <p>{{ appVersion }}</p>
     <button @click="changeUserName">修改用户名</button>
@@ -12,12 +12,10 @@
     <p v-for="(li, index) in todoList" :key="index">{{ li }}</p>
   </div>
 </template>
-
 <script>
 import AInput from '_c/AInput.vue'
 import AShow from '_c/AShow.vue'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-
 export default {
   name: 'store',
   data () {
@@ -39,6 +37,14 @@ export default {
       appVersion: state => state.appVersion,
       todoList: state => state.user.todo ? state.user.todo.todoList : []
     }),
+    stateValue: {
+      get () {
+        return this.$store.state.stateValue
+      },
+      set (value) {
+        this.SET_STATE_VALUE(value)
+      }
+    },
     ...mapGetters([
       'appNameWithVersion',
       'firstLetter'
@@ -51,7 +57,7 @@ export default {
     // },
     // userName () {
     //   return this.$store.state.user.userName
-    // }
+    // },
     inputValueLastLetter () {
       return this.inputValue.substr(-1, 1)
     }
@@ -59,7 +65,8 @@ export default {
   methods: {
     ...mapMutations([
       'SET_USER_NAME',
-      'SET_APP_NAME'
+      'SET_APP_NAME',
+      'SET_STATE_VALUE'
     ]),
     ...mapActions([
       'updateAppName'
@@ -79,7 +86,7 @@ export default {
       // this.$store.commit('SET_APP_VERSION')
     },
     changeUserName () {
-      this.SET_USER_NAME('vue-course')
+      this.SET_USER_NAME('vue-cource')
       // this.$store.dispatch('updateAppName', '123')
     },
     registerModule () {
@@ -91,6 +98,9 @@ export default {
           ]
         }
       })
+    },
+    handleStateValueChange (val) {
+      this.SET_STATE_VALUE(val)
     }
   }
 }
